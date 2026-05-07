@@ -58,3 +58,21 @@ source venv/bin/activate  # Windows : venv\Scripts\activate
 pip install -r requirements.txt
 
 
+
+app.py — lance le site web et gère ce que l'utilisateur voit
+aggregator.py — appelle les 3 modules et calcule le verdict final
+config.py — stocke toutes les clés API et les constantes du projet
+requirements.txt — liste les librairies Python à installer
+.env — tes clés API secrètes, jamais partagé
+.env.example — la version vide du .env pour que les autres sachent quoi remplir
+.gitignore — dit à Git quels fichiers ne jamais uploader sur GitHub
+modules/virustotal.py — tout le code qui parle à VirusTotal
+modules/abuseipdb.py — tout le code qui parle à AbuseIPDB
+modules/alienvault.py — tout le code qui parle à AlienVault OTX
+modules/init.py — fichier vide qui dit à Python que ce dossier est un module
+utils/validator.py — détecte si l'input est une IP, un domaine ou un hash
+templates/index.html — la page avec le formulaire de recherche
+templates/results.html — la page qui affiche le rapport
+__init__.py - dit que le dossier contient des fichier python importable (sinon peut pas importer les fonctions) 
+
+
