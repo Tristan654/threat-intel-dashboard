@@ -47,11 +47,16 @@ def _parse_response(data, input_type):
 
     # Récupère les moteurs qui ont détecté quelque chose de suspect
     engines = attrs.get("last_analysis_results", {})
-    flagging_engines = [
-        {"engine": name, "result": info.get("result")}
-        for name, info in engines.items()
-        if info.get("category") in ("malicious", "suspicious")
-    ][:10]
+    flagging_engines = []
+
+    for name, info in engines.items():
+        if info.get("category") in ("malicious", "suspicious"):
+            flagging_engines.append({
+            "engine": name,
+            "result": info.get("result")
+            })
+
+    flagging_engines = flagging_engines[:10]
 
     return {
         "source":           "VirusTotal",
