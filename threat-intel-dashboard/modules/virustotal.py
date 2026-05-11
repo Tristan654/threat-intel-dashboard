@@ -1,3 +1,4 @@
+#----------Import------------
 import requests
 from config import (
     VIRUSTOTAL_BASE_URL,
@@ -9,6 +10,8 @@ from config import (
     Verdict,
 )
 
+
+#-----------Functions------------
 def _get_headers():
     """Retourne le header d'authentification pour l'API VirusTotal"""
     return {"x-apikey": VIRUSTOTAL_API_KEY}
@@ -80,7 +83,7 @@ def _error(message):
         "error":   message,
     }
 
-def query(value, input_type):
+def query_virustotal(value, input_type):
     """
     Point d'entrée principal du module.
     Appelle l'API VirusTotal et retourne un dict standardisé.

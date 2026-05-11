@@ -1,6 +1,10 @@
+
+#----------Import------------
 import re
 import ipaddress
 
+
+#---------Constante----------
 # Regex pour détecter un hash MD5 (32), SHA-1 (40) ou SHA-256 (64)
 HASH_PATTERN = re.compile(r"^[a-fA-F0-9]{32}$|^[a-fA-F0-9]{40}$|^[a-fA-F0-9]{64}$")#compile → Python lit le pattern une seule fois et le stocke
 
@@ -8,6 +12,9 @@ HASH_PATTERN = re.compile(r"^[a-fA-F0-9]{32}$|^[a-fA-F0-9]{40}$|^[a-fA-F0-9]{64}
 DOMAIN_PATTERN = re.compile(
     r"^(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$"
 )
+
+
+#-----------Functions------------
 
 def detect_input_type(value):
     value = value.strip()#rm space (beginning and end)

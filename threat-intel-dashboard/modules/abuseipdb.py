@@ -1,3 +1,4 @@
+#----------Import------------
 import requests
 from config import (ABUSEIPDB_API_KEY,
     ABUSEIPDB_BASE_URL,
@@ -7,6 +8,8 @@ from config import (ABUSEIPDB_API_KEY,
     InputType,
     Verdict,)
 
+
+#-----------Functions------------
 
 def _get_headers():
     """ """
@@ -51,7 +54,7 @@ def _error(message):
 
 
 
-def query(value, input_type):
+def query_abuseipdb(value, input_type):
     if input_type != InputType.IP:
         return {
             "source":           "AbuseIPDB",

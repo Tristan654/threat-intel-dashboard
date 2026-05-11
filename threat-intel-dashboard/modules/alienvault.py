@@ -1,3 +1,4 @@
+#----------Import------------
 import requests
 from config import (
     ALIENVAULT_BASE_URL,
@@ -8,6 +9,8 @@ from config import (
     InputType,
     Verdict,
 )
+
+#-----------Functions------------
 
 def _get_headers():
     return {"X-OTX-API-KEY": ALIENVAULT_API_KEY}
@@ -62,7 +65,7 @@ def _error(input_type, message):
         "error":       message,
     }
 
-def query(value, input_type):
+def query_otx(value, input_type):
     if not ALIENVAULT_API_KEY:
         return _error(input_type, "ALIENVAULT_API_KEY manquante dans .env")
 
