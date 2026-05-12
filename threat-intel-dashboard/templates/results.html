@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+    <h1>Results for {{ report.value }}</h1>
+    <h2>Overall verdict : {{ report.overall_verdict }}</h2>
+
+    {% for source in report.sources %}
+        <h3>{{ source.source }}</h3>
+        <p>Verdict : {{ source.verdict }}</p>
+        <p>Error : {{ source.error }}</p>
+    {% endfor %}
+
+    <a href="/">Back</a>
+</body>
+</html>
