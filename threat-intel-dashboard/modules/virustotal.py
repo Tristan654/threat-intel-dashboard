@@ -13,11 +13,10 @@ from config import (
 
 #-----------Functions------------
 def _get_headers():
-    """Retourne le header d'authentification pour l'API VirusTotal"""
     return {"x-apikey": VIRUSTOTAL_API_KEY}
 
 def _build_url(input_type, value):
-    """Construit l'URL selon le type d'input"""
+    
     urls = {
         InputType.IP:     f"{VIRUSTOTAL_BASE_URL}/ip_addresses/{value}",
         InputType.DOMAIN: f"{VIRUSTOTAL_BASE_URL}/domains/{value}",
