@@ -1,78 +1,66 @@
 Description
-A Python-based threat intelligence aggregation tool that queries multiple public threat databases simultaneously and returns a consolidated maliciousness verdict for a given indicator (IP address, domain name, or file hash).
-Built as a portfolio project to demonstrate practical threat intelligence workflows used in SOC environments.
 
+Outil d'agrégation de threat intelligence développé en Python. Il interroge simultanément 3 bases de données publiques de cybersécurité et retourne un verdict consolidé pour un indicateur donné — adresse IP, nom de domaine ou hash de fichier.
+Projet portfolio conçu pour reproduire un workflow d'analyse d'IOCs tel qu'il est pratiqué dans un environnement SOC.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Sources de données
 
-VirusTotal
-Tu lui envoies une IP, un domaine ou un fichier. Il le soumet automatiquement à 70+ antivirus en même temps et te dit combien d'entre eux le considèrent comme dangereux. C'est la référence mondiale pour vérifier si quelque chose est malveillant.
+VirusTotal — soumet l'indicateur à 70+ moteurs antivirus simultanément et retourne le nombre de détections. Référence mondiale pour évaluer la malveillance d'un fichier, d'une IP ou d'un domaine.
+AbuseIPDB — base de données communautaire alimentée par des milliers d'administrateurs système qui signalent les IPs malveillantes. Retourne un score de confiance de 0 à 100. IP uniquement.
+AlienVault OTX — plateforme collaborative où des chercheurs en sécurité publient des rapports sur des campagnes d'attaque réelles. Permet de savoir si un indicateur est lié à une attaque documentée et dans quel contexte.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Fonctionnalités
 
-AbuseIPDB
-Une base de données communautaire où des milliers d'admins système dans le monde signalent les IPs qui les ont attaqués. Tu soumets une IP et tu obtiens un score de 0 à 100 qui représente la probabilité qu'elle soit utilisée pour des attaques.
-
-AlienVault OTX
-Une plateforme où des chercheurs en sécurité du monde entier publient des rapports sur des campagnes d'attaque réelles. Tu soumets un indicateur et tu sais s'il est lié à une attaque documentée, par qui, et dans quel contexte.
-
-
-Features
-
-Submit an IP address, domain name, or file hash (MD5 / SHA-1 / SHA-256)
-Queries 3 threat intelligence sources in parallel : VirusTotal, AbuseIPDB, AlienVault OTX
-Returns a consolidated verdict : MALICIOUS / SUSPICIOUS / CLEAN
-Displays per-source details : detection scores, geolocation, threat campaigns, flagging engines
-Lightweight web interface built with Flask
-
+Soumettre une IP, un domaine ou un hash (MD5 / SHA-1 / SHA-256)
+Interrogation des 3 sources en parallèle
+Verdict consolidé : MALICIOUS / SUSPICIOUS / CLEAN
+Détail par source : score de détection, géolocalisation, campagnes associées
+Interface web légère avec Flask
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Structure du projet
 
 threat-intel-dashboard/
 │
-├── app.py
-├── aggregator.py
-├── config.py
-├── requirements.txt
-├── .env.example
-├── .env
+├── app.py               # Serveur Flask — routes et interface web
+├── aggregator.py        # Orchestre les 3 modules et calcule le verdict global
+├── config.py            # Clés API, URLs de base, seuils de verdict
+├── requirements.txt     # Dépendances Python
+├── .env                 # Clés API secrètes — ne jamais commiter
+├── .env.example         # Template du .env à remplir
 │
 ├── modules/
-│   ├── __init__.py
-│   ├── virustotal.py
-│   ├── abuseipdb.py
-│   └── alienvault.py
+│   ├── __init__.py      # Rend le dossier importable par Python
+│   ├── virustotal.py    # Intégration API VirusTotal
+│   ├── abuseipdb.py     # Intégration API AbuseIPDB
+│   └── alienvault.py    # Intégration API AlienVault OTX
 │
 ├── utils/
-│   ├── __init__.py
-│   └── validator.py
+│   ├── __init__.py      # Rend le dossier importable par Python
+│   └── validator.py     # Détecte le type d'input : IP / domaine / hash
 │
 └── templates/
-    ├── index.html
-    └── results.html
+    ├── index.html       # Formulaire de recherche
+    └── results.html     # Affichage du rapport
 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Installation
 
-# 1. Clone the repository
-git clone https://github.com/your-username/threat-intel-dashboard.git
+# 1. Cloner le repo
+git clone https://github.com/ton-username/threat-intel-dashboard.git
 cd threat-intel-dashboard
 
-# 2. Create a virtual environment
-python -m venv venv
-source venv/bin/activate  # Windows : venv\Scripts\activate
+# 2. Créer l'environnement virtuel
+python3 -m venv venv
+source venv/bin/activate
 
-# 3. Install dependencies
+# 3. Installer les dépendances
 pip install -r requirements.txt
 
+# 4. Configurer les clés API
+touch .env
+# Remplir les 3 clés API dans le fichier .env
 
-
-app.py — lance le site web et gère ce que l'utilisateur voit
-aggregator.py — appelle les 3 modules et calcule le verdict final
-config.py — stocke toutes les clés API et les constantes du projet
-requirements.txt — liste les librairies Python à installer
-.env — tes clés API secrètes, jamais partagé
-.env.example — la version vide du .env pour que les autres sachent quoi remplir
-.gitignore — dit à Git quels fichiers ne jamais uploader sur GitHub
-modules/virustotal.py — tout le code qui parle à VirusTotal
-modules/abuseipdb.py — tout le code qui parle à AbuseIPDB
-modules/alienvault.py — tout le code qui parle à AlienVault OTX
-modules/init.py — fichier vide qui dit à Python que ce dossier est un module
-utils/validator.py — détecte si l'input est une IP, un domaine ou un hash
-templates/index.html — la page avec le formulaire de recherche
-templates/results.html — la page qui affiche le rapport
-__init__.py - dit que le dossier contient des fichier python importable (sinon peut pas importer les fonctions) 
-
+# 5. Lancer l'application
+python3 app.py
+# Ouvrir http://localhost:5000 dans le navigateur
 
