@@ -17,7 +17,7 @@ DOMAIN_PATTERN = re.compile(
 #-----------Functions------------
 
 def detect_input_type(value):
-    value = value.strip()#rm space (beginning and end)
+    value = value.strip()#supprime espace (début et fin)
 
     # 1.IP 
     try:
